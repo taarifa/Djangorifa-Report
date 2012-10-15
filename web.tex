@@ -1,0 +1,69 @@
+\chapter{Web Framework and Database}
+The right choice of web framework was an important choice for this project. Django was ultimately chosen, and the reasons for this are explained in Sections~\ref{sec:web:req} and~\ref{sec:web:choice}. \\
+
+The choice of database was forced by the choice of Django, and this is explained in Section~\ref{sec:web:database}. \\
+
+In order to understand terminology used in the remainder of the report, Section~\ref{sec:web:django} gives a brief introduction to Django.
+
+\section{Requirements}
+\label{sec:web:req}
+
+The web framework must be opensource (Section~\ref{sec:web:req:opensource}). \\
+It must also have a large community (Section~\ref{sec:web:req:community}) and be well documented (Section~\ref{sec:web:req:documentation}). \\
+Section~\ref{sec:web:req:language} discusses the features the language must have.
+
+\subsection{Opensource}
+\label{sec:web:req:opensource}
+
+A large number of people will collaborate on this project in the future. Licensing is easy if the collaboration is under an opensource license, for example \gls{GPL}. \\
+
+Distribution is easier if the framework is under an opensource license: it can be downloaded by anyone at anytime. \\
+
+Changing code of an opensource product is easier than changing one which is not. A non-opensource product may not have easily accessible source-code, or the license may not permit it. \\
+
+A non-opensource product may charge for use, and Taarifa2 must be as cheap as possible.
+
+\subsection{Community}
+\label{sec:web:req:community}
+
+A large community is useful in case development encounters problems. A large community means it is more likely a problem encountered has been encountered before and the solution is somewhere like \gls{so}. \\
+
+Another benefit of a large community is that it is likely somebody has implemented a solution to a common problem (for example, user registration) and the code is available to use. This can save time re-implementing already conceived solutions.
+
+\subsection{Documentation}
+\label{sec:web:req:documentation}
+
+Good documentation is vital as it can be extremely difficult to use a product without knowing any of the functions. Reading source code is an option, but it can become tedious.
+
+\subsection{Language}
+\label{sec:web:req:language}
+
+I must be comfortable with the language the product is developed in. \\
+
+The language must be \gls{OO}, because that is my preferred style of coding. Adding extra functionality should also be easier with \gls{OO} because the approach is modular.
+
+\section{Choice}
+\label{sec:web:choice}
+
+Due to language preferences, any PHP framework was not considered. I do not like it and speak from extensive use. Technically, it is not \gls{OO}, it allows support for objects~\cite{phpoo}. \\
+
+The choice was therefore between \gls{GWT}, Ruby on Rails, and Django. Having not used \gls{GWT} before, I chose Ruby on Rails as it fitted the above and for all the advantages discussed in Section~\ref{sec:br:web:ror}. \\
+
+After using Ruby on Rails for two days, I encountered problems which I knew how to resolve in Django (having used it before), but not in Rails. Research discovered that Ruby on Rails does not treat forms as objects. This means that forms have to be written as HTML. \\
+
+Django has a much more sophisticated forms management which allows forms to be manipulated in Python, rather than HTML. \\
+
+The other problem with Rails was that there was no built in administration section. Two recommended plugins with very different features were explored. Neither had the flexibility nor extendibility of the Django administration interface. \\
+
+Rails has a command line interface which automatically loads all the modules in use by the current web application. There is also a command ``reload" which can be manually called when a file has been changed. Django does ship with this, but there is an extension ``django-extensions"~\cite{extensions} which loads all modules being used. \\
+
+Django has therefore been used as the web framework with ``django-extensions" installed. \\
+
+Django has an \gls{ORM} which means that database tables are created automatically by writing code in a file called ``models.py". Any subclass of the Django class ``models.Model" will be turned into a database table when running a command ``syncdb". \\
+
+The UML throughout this report is generated from ``django-extensions"' ``graph\_models" function. This reads the ``models.py" file in all applications and presents it in graph format. The UML is not an exact representation of the database structure, but direct database accesses are discouraged to allow the underlying database to change without having to rewrite code.
+
+\section{Summary}
+The requirements for the web framework were discussed. The various options for framework were discussed, and Django was chosen as the framework. \\
+The choice for the database was discussed and decided as Postgresql. \\
+A brief introduction to Django was given.

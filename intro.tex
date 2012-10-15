@@ -1,0 +1,40 @@
+\chapter{Introduction}
+\section{Objective}
+The \gls{WBG} is currently funding development projects in Africa. One of the focuses is a centralised reports management system to allow members of the public to report problems with public facilities.
+
+This project aims to create an open-source web application which provides a facilities-reports-management system whereby reports made by citizens can be tracked and managed.
+
+The finished product should be deployable in different countries with minimal configuration, and be easily extensible by other programmers.
+
+\section{Motivation}
+This project is motivated by the desire to use the skills gathered during my three years at university to develop a project which is beneficial to people. I was a core member of the winning team at 2011's London Water Hackathon, where I spent 24 hours hacking an existing reports management system, Ushahidi Web~\cite{ushahidiweb}.
+
+This is used primarily in Africa to gather information about currently occurring crises; for example, it was used in the immediate aftermath of the Haitian earthquake.
+
+Ushahidi has many limitation, not least of which that it is being maintained with a deprecated version of Kohana PHP~\cite{kohana}, a web framework. Additionally, it is only applicable for currently occurring problems, there is no follow-up on the reports created.
+
+The civic issue tracker Open311 is used by many cities in the developed world~\cite{open311known} to gather non-urgent reports - FixMyStreet~\cite{fixmystreetuk} is one of the better known implementations - but it is unstable~\cite{open311api}. Once a report has been made, it is sent to the council who are responsible for addressing the problem. If they choose to ignore it, the user does not necessarily receive feedback.
+
+The proposed system aims for a transparent process by facilitating the chain from report-made-on-facility to report-completed. As far as can be discerned, there is no existing product which caters for this.
+
+The target market is councils of developing countries (with the focus on Africa) where there are few, or no, public ICT services. There is therefore a niche for a public facilities manager.
+
+Ushahidi and Open311 are focussed around the web. Over 85\% of internet users in Africa use their mobile phones as a connection point~\cite{africainfo}; although the Internet penetration rate is just 5\%~\cite{africainfo}. Africa also has the fastest growing take-up rate of mobile telephony~\cite{africainfo}.
+
+There is a need for a product which caters to this mobile trend that enables citizens to interact with their local councils.
+
+\subsection{Considerations}
+When introduced to the project at the London Water Hackathon, Ushahidi was demonstrated using data from a slum called Tandale in the city of Dar es Saalam, Tanzania. Mark Iliffe~\cite{markiliffe}, the team leader for the project, and others have extensively mapped this area and published the data on OpenStreetMap~\cite{openstreetmap}.
+
+Because there is such extensive data, Tandale will be used as the use-case for the implementation of the project. There is a movement for OpenStreetMap to extend its mapping of Africa~\cite{openstreetmapafrica}, so in the future Tandale will no longer be unusual in this respect.
+
+Bribery and corruption are common in Africa~\cite{corruption}, so any design will be carefully considered to make reporting and the follow-up as transparent as possible to the general public. Preventing nepotism and making the system fair is paramount.
+
+\subsection{Challenges}
+A web application has been written in Django - a Python web framework - which has been designed to be pluggable and customisable by a programmer with little skill. The application is named Djangorifa, which is the name of the web application, ``Django", combined with the Swahili for ``reports".
+
+The application consists of a reports management system and a facilities management system.
+
+Performance was a challenge: the technology the application runs off is likely to be old.
+
+This report covers the journey taken in developing the system.

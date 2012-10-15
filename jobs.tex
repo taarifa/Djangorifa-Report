@@ -1,0 +1,45 @@
+\chapter{Jobs Auctioning}
+Automatically assigning workers to jobs is difficult in a ``developed" country where contracts exist; relatively low corruption is in place; and most people have a nine-to-five. \\
+
+Automatically assigning workers to jobs in a ``developing" country would be a nightmare. Workers need to be able to control when they do work, and where they do it. For that reason a jobs auctioning system was implemented. Other methods were extensively researched, but this was by far the most sensible option. \\
+
+When a report is made, and the administrator has verified the problem, the job's system is signalled. This functionality is provided by Django signals. If the issue is marked as urgent, it is entered straight away into the auction. If it is marked as non-urgent, and there are already many jobs waiting to be completed, the issue is held back so as to try to even out the rate at which jobs are released. \\
+
+One of the main goals of this project was to try to determine if there was a method of determining the urgency of a report automatically. Unfortunately, this was not possible with the limited data available, and a field was added to the ReportedIssue so an administrator could pre-determine the urgency of an issue (Section~\ref{sec:jm:urgency}).
+
+\section{Urgency Detection}
+\label{sec:jm:urgency}
+
+Various methods of detecting the urgency of a report were considered and tried. When designing methods of implementing this, the over-arching constraint was to be as simple as possible for an administrator to configure and understand. \\
+
+\subsection{Natural Language Parsing}
+Separating the reports into parts and maintenances didn't come about until a way through the project. Initially, a user filled in a textbox which explained the situation and was treated as one job. \\
+
+An initial idea was to use language parsing to determine which reports could be grouped together, and also to determine the urgency of the report. \\
+
+The requirement to translate this into many languages notwithstanding, a lot of data would be required to train a system in reports created; data which does not exist.
+
+\subsection{Measuring the rate at which reports come in}
+The first method considered was to have a function called every time interval $t$. At $t$, if more than $n$ reports had been made during that interval, then the report is to be considered urgent and handled immediately. \\
+
+Firstly, without a lot of data, determining an average ``background rate" for the reports would not be possible. An administrator is just as new to the system as the system is to itself, and so is not likely to know these parameters either. \\
+
+Secondly, it could be possible that when a user reports an issue with the facility, they tick a few more boxes that aren't that important as they're submitting the form anyway.
+
+\subsection{Prospect Theory}
+After reading nearly every paper Kahnemman and Tversky wrote on the subject, it was clear the only way to approach the problem with prospect theory was to asked an administrator questions like:
+
+\begin{quotation}
+If Facility Category `toilets' breaks down, do you prefer it definitely being fixed for £5, or to have a 50\% of being fixed, but for £2?
+\end{quotation}
+
+The administrator would have to be asked a whole slew of questions like this so the system could work out how highly a facility is valued. This is not a practical way to spend one's time, nor is it something the \gls{WBG} would be likely to finance. \\
+
+Ensuring that the calculated prospects were correct would also be extremely difficult. If two question with identical outcomes are posed, but each asked differently, the answers given invariably differ~\cite{prospect}. \\
+
+Asking an administrator:
+\begin{quotation}
+If Facility Category `toilets' breaks down, do you prefer it to remain broken with a 50\% chance, and repairs cost £2, or a guaranteed fix for £5?
+\end{quotation}
+
+could yield completely different answers.

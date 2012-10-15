@@ -1,0 +1,168 @@
+\chapter{Background Research}
+\label{sec:br}
+
+There are three types of user considered throughout:
+\begin{itemize}
+\item Super-administrator: the person who configures the system but is not involved in the day-by-day affairs.
+\item Administrator: someone at the council who can control and administer the system.
+\item Citizen: a person who is interested in reporting problems with a facility.
+\end{itemize}
+
+Djangorifa can be divided into two main components:
+\begin{itemize}
+\item Reports Management
+\item Facilities Management
+\end{itemize}
+
+The decisions made for the Reports and Facilities Management are discussed in the relevant implementation section Section~\ref{sec:rm}.
+
+A brief introduction to Django and an explanation for why it was chosen can be found in Section~\ref{br:django}.
+
+\section{Django}
+\label{br:django}
+
+My requirements for a web framework were:
+\begin{itemize}
+\item Written in a language I know.
+\item Offers geo-spatial database queries.
+\item Detailed documentation and a large community of support.
+\end{itemize}
+
+PHP was automatically ruled out. I have used it extensively and do not think it is good enough to build a robust, easily maintained codebase. ~\cite{phpsucks} details very clearly the reasons against PHP.
+
+Two frameworks which fit all the requirements were therefore considered: Ruby on Rails~\cite{rails} and Django~\cite{django}.
+
+I decided to try Ruby on Rails. After two days, I realised it does not have object-oriented forms; HTML forms are defined by strings.
+
+Django has object-oriented forms, and these became necessary. Therefore, I switched to Django.
+
+\section{Introduction to Django}
+Django is known as an \gls{MVT} framework. Each component of a web application can be separated into an app, which is a folder\footnote{Which must be in the Python path} containing a ``models.py" file, a ``views.py" file and a ``templates" directory. An app may also declare an ``admin.py" file which Django uses to provide an administration section.
+
+The main directory of the web application contains a ``settings.py" file. This file specifies the database in use and the locations of all the apps in the application.
+
+\subsection{Model}
+For an app to store data in the database, classes which subclass ``django.db.models.Model" must be defined in ``models.py". These classes are called models. Each model can define class variables called fields. As an example:
+
+\begin{figure}[thp]
+	\centering
+	\begin{tabular}{c}
+	\begin{lstlisting}[label={lst:model}]
+	class ExampleModel(models.Model):
+		field1 = models.CharField(max_length=2)
+		field2 = models.IntegerField(max_digits=2)
+		field3 = models.ForeignKey(ExampleModel2)
+	\end{lstlisting}
+	\end{tabular}
+	\caption{Example models}
+\end{figure}
+
+The command-line operation ``syncdb" tells Django to create a database table for each class, and each field variable as a column in that table. An automatically generated column called ``id" is also added to the database when this command is called. Django provides an abstraction layer, an \gls{ORM}, so database operations can be performed by calling methods on the models (Figure~\ref{lst:savemodel}).
+
+\begin{figure}[thp]
+	\centering
+	\begin{tabular}{c}
+	\begin{lstlisting}[label={lst:savemodel}]
+	# Create a new instance of an example model
+	# and save it to the database
+	em = ExampleModel(field1="Moo", field2="Blah")
+	em.save()
+	
+	# Get the data from the database and change it
+	em = ExampleModel.objects.get(field1="Moo")
+	em.field2 = "Something"
+	em.save()
+	\end{lstlisting}
+	\end{tabular}
+	\caption{Manipulating models}
+\end{figure}
+
+\subsection{View}
+When a user navigates to a page of a Django application, Django's URL dispatcher looks for a file called ``urls.py" in the application directory on the server. This file contains all valid URLs for the website, which can be defined either as hard-coded strings or as \glspl{regex}. Each URL is defined with a function to be called when the user requests it. The function is in an app's ``views.py".
+
+Functions in ``views.py" perform the logic needed to get the content to display to the user. These functions are passed a \emph{request} object. This contains \gls{session} information and any data sent with a \gls{get} or a \gls{post}. The view must then return Django's encapsulation of an \gls{HTTP} response.
+
+The HTTP response takes a string which will be sent to the browser as HTML. To maintain Django's philosophy of \gls{DRY}, this string can be rendered using a Django function, ``render", which takes three compulsory arguments: the request object; the path to a template; and a dictionary of variables to give to the template, which can be any Python object, for example a model or a string.
+
+\subsection{Template}
+The template is an HTML file inside the ``templates" directory of an app. This file contains a mixture of HTML and Django's template language. The template language provides minimal functionality so that the variables provided in the dictionary can be presented.
+
+\begin{figure}[thp]
+	\centering
+	\begin{tabular}{c}
+	\begin{lstlisting}[label={lst:views}]
+return render(request,
+	"example.html", {
+		'x':'moo',
+		'y':[1,2,3]
+	}
+)
+	\end{lstlisting}
+	\end{tabular}
+	\caption{Views function}
+\end{figure}
+
+Figure~\ref{lst:template} is an example of what might be returned by a views function. The template language uses ``\{\{ \}\}" to represent a variable, and ``\{\% \%\}" to represent a macro.
+
+\begin{figure}[thp]
+	\centering
+	\begin{tabular}{c}
+	\begin{lstlisting}[label={lst:template}]
+	{% for i in y %}Cows say {{ x }}.{% endfor %}
+	\end{lstlisting}
+	\end{tabular}
+	\caption{Example.html}
+\end{figure}
+
+When the template is rendered with the render function, the macros are executed and the variables filled in with the values in the dictionary. When Figure~\ref{lst:template} is rendered, the HTML produced is "Cows say moo.Cows say moo.Cows say moo."
+
+\subsection{Admin}
+Django provides an administration section where apps can register their models to be added, changed and deleted through the website. (Figure~\ref{lst:adminmodel})
+
+\begin{figure}[thp]
+	\centering
+	\begin{tabular}{c}
+	\begin{lstlisting}[label={lst:adminmodel}]
+	class ExampleModelAdmin(admin.ModelAdmin):
+		# Customise the admin inside this class
+		pass
+		
+	# Register with the admin
+	admin.site.register(
+		ExampleModel,
+		ExampleModelAdmin
+	)
+	\end{lstlisting}
+	\end{tabular}
+	\caption{Manipulating models}
+\end{figure}
+
+\subsection{Forms}
+Django provides a forms module which facilitates the creation of HTML forms. django-crispy is a third-party module which makes this process even easier: a form object is rendered in the template by ``\{\% crispy form \%\}".
+
+There are two classes of forms this project uses: ModelForm and Form. ModelForm creates a form for the model it's given.
+
+\begin{figure}[thp]
+	\centering
+	\begin{tabular}{c}
+	\begin{lstlisting}[label={lst:modelform}]
+	class ExampleModelForm(forms.ModelForm):
+		extra_field = forms.CharField()
+
+		class Meta:
+			model = ExampleModel
+	\end{lstlisting}
+	\end{tabular}
+	\caption{ModelForm}
+\end{figure}
+
+When Figure~\ref{lst:modelform} is rendered, it produces an HTML form with three input fields: field1, field2 and extra\_field. When this form is submitted, called .save() on the form will save the model with the user input data to the database.
+
+Form provides this ability to generate forms, but with no save method or model.
+
+Both classes are validated by Django's validation method when the form is submitted. Extra validation can be added to the field declaration in the code.
+
+\subsection{Database}
+\label{sec:web:database}
+
+Django ships with GeoDjango which provides functionality for geospatial queries on a database. GeoDjango can be used with Postgresql~\cite{postgresql} and MySQL~\cite{mysql}, but the latter has limitations~\cite{mysqllims}, so Postgresql has been used.

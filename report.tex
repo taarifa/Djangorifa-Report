@@ -1,0 +1,71 @@
+\documentclass{report}
+\usepackage{amsmath, amssymb, placeins, url, verbatim}
+\usepackage[hyperref,ibidtracker=false,backend=bibtex,hyperref=false]{biblatex}
+\usepackage[acronym,description,toc]{glossaries}
+\usepackage{titlesec}
+\usepackage{emp}
+\usepackage{listings,color}
+\usepackage{hyperref}
+\usepackage[parfill]{parskip}
+
+% Reset acronyms at each chapter
+\titleformat{\chapter}[display]
+    {\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}[\glsresetall]
+    
+\ifx\pdftexversion\undefined
+\usepackage[dvips]{graphicx}
+\else
+\usepackage[pdftex]{graphicx}
+\DeclareGraphicsRule{*}{mps}{*}{}
+\fi
+
+\usepackage{breqn}
+\addbibresource{\jobname.bib}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\newcommand{\coststar}{\mathbf{c^*}}
+\newcommand{\seeg}{\footnote{See glossary}}
+
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+\newenvironment{proof}[1][Proof]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+% Glossaries stuff
+
+% ORM
+\loadglsentries{glossary.tex}
+% \makeglossaries
+
+
+\lstset{language=Python,showstringspaces=false,formfeed=\newpage,tabsize=4,commentstyle=\itshape,basicstyle=\ttfamily,morekeywords={lambda, forms},captionpos=b,numbers=left,keywordstyle=\color{blue}}
+
+\title{Djangorifa: A reports-facilities-management bidding system}
+\author{Caroline Glassberg-Powell}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The World Bank Group has been funding development of web applications for developing countries. As the mobile telephony market grows in Africa, more focus is being spent on facilitating the development of public facilities through the mobile web. One of these focuses is a reports management system for citizens to report problems with their town.
+
+There is, however, little focus on what happens to the reports after they are made. There is need for a transparent chain of report-making whereby a citizen makes a report and can track its progress.
+
+I have created a web application through which people can report civic issues and track the report's progress. This project uses data from a slum in Africa to exemplify this idea.
+\end{abstract}
+
+\tableofcontents
+
+\include{intro}
+\include{background}
+\include{overview}
+\include{reportmgmt}
+\include{auctions}
+\include{conclusions}
+\include{appendix}
+\include{guide}
+\printglossaries
+\printbibliography
+
+\end{document}

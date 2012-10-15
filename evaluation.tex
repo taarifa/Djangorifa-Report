@@ -1,0 +1,10 @@
+\chapter{Performance and Evaluation}
+
+\section{Problems Encountered}
+\subsection{Django Problems}
+The configuration options are dynamic, and as they are changed, the administration pages should update to reflect those changes. Django requires a restart to the server when the administration changes occur. Even with a cache clear call, the admin pages still do not reload. The internet seems unable to help. Luckily, it is assumed that once the configurations are set, they will not be changed that frequently, and they will only be changed by a superuser. This means they will have been trained how to restart the server, and this should not be too much of a problem.
+
+There were a few places in the code where bottlenecks were experience. In those places that were possible, print statements and timings were used to establish the cause of the slowness. For example, iterating over a very large queryset was causing the site to respond slowly. As this bottleneck was discovered, the Django website suggested a method for improving the iteration. This sped the results up by roughly 2s.
+
+\subsubsection{olwidget Problems}
+olwidget doesn't allow the admin change list view to follow through models like normal admins, so I had to hack the core of olwidget which means that it's now not compatible with any other version, which is terrible practice.
