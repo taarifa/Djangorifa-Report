@@ -95,9 +95,9 @@ Django comes with a super-user and  administrator groups, so ``Citizen" has been
 
 The UML for this app is in Figure~\ref{fig:users}. UserProfile is defined which contains optional details a user may enter about themselves. Future version of Djangorifa might become more of a social network.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
-\includegraphics[scale=0.51]{img/users.png}
+\includegraphics[scale=0.7]{img/users.png}
 \caption{Figure to show UML for the users app}
 \label{fig:users}
 \end{figure}
@@ -106,13 +106,11 @@ The UML for this app is in Figure~\ref{fig:users}. UserProfile is defined which 
 \label{sec:di:admin}
 
 \subsection{django.contrib.admin}
-An app registers with the admin section through its ``admin.py" file. Classes are defined which allow complete control over the behaviour of models in the admin site. \\
+An app registers with the admin section through its ``admin.py" file. Classes are defined which allow complete control over the behaviour of models in the admin site.
 
-The admin site automatically creates a view to list all instances of a registered model. If one of these instances is clicked on, the user sees a change form for that instance. \\
+The admin site automatically creates a view to list all instances of a registered model. If one of these instances is clicked on, the user sees a change form for that instance.
 
-A third-party app called ``django-grappelli" has been installed which has many additional features, one of which is a search bar on all foreign key relations. For example, ExampleModel1 has a foreign key field to ExampleModel2. There are 10,000 instances of ExampleModel2 in the database. When an administrator wants to add a new ExampleModel1 with the foreign key to an existing ExampleModel2 instance, Django's default behaviour is a drop-down select list. Grappelli replaces that with a search button that can search all columns of a model. \\
-
-Grappelli also changes the theme of the admin site.
+A third-party app called ``django-admin-tools" has been installed which enables in-code overrides of how the administration section appears to the user. The theme is also changed slightly.
 
 \subsection{taarifa\_config}
 \begin{figure}
@@ -121,15 +119,13 @@ Grappelli also changes the theme of the admin site.
 \caption{UML of taarifa\_config}
 \label{fig:taarifa_config}
 \end{figure}
-An administrator must configure the system on first use. The system will show a message informing them that the site is not configured until they configure. An administrator must choose a site to configure Taarifa for. On the configuration page, an administrator is presented with a map onto which they can draw a polygon to outline the area in which reports can be made. \\
+An administrator must configure the system on first use. If the system is not configured, they will be forced to the configuration page. Here they will be forced to fill out their user profile (to keep the concept of profiles consistent). They will then be asked to name the site, and to provide the system with the domain name. This is so URL look-up works correctly. They will then be presented with a map where they must draw the bounds of their constituency. This will define where reports and facilities can be defined. There is currently a feature being developed to make a bridge with \gls{OSM}, so this part is currently not 100\% working.
 
-This is used when presenting facilities to a user to report. Only facilities defined in this area will be shown. This is for the case when there are multiple sites running from the same database. \\
+The map is provided by a third-party plugin called ``django-olwidget"~\cite{olwidget}.
 
-The map is provided by a third-party plugin called ``django-olwidget"~\cite{olwidget}. \\
-
-An app can implement a model which has a field with a one-to-one relationship with TaarifaConfig (Figure~\ref{fig:taarifa_config}). This model will automatically be displayed on the configuration page, which enables app-specific settings. This is used by auctions.
+An app can implement a model which has a field with a one-to-one relationship with TaarifaConfig (Figure~\ref{fig:taarifa_config}). This model will automatically be displayed on the configuration page, which enables app-specific settings. This is currently not used, but will enable plugins to be developed more easily.
 
 \section{Mobile phone version}
 \label{sec:di:mobile}
 
-Django has a middleware framework, which provides an \gls{API} for apps to alter request objects before they are passed to views. django-mobile~\cite{mobile} uses this to add a ``flavour" to each request object, which can either be ``mobile" or ``full". Throughout Taarifa, if there are separate views for mobile phones, this feature is used.
+Django has a middleware framework, which provides an \gls{API} for apps to alter request objects before they are passed to views. django-mobile~\cite{mobile} uses this to add a ``flavour" to each request object, which can either be ``mobile" or ``full". Throughout Djangorifa, if there are separate views for mobile phones, this feature is used.

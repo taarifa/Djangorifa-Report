@@ -1,38 +1,38 @@
 \chapter{Conclusions and Future Work}
 
-I have successfully demonstrated that it is possible to build a reports-jobs-facilities management system which is pluggable by a programmer. \\
+I have successfully demonstrated that it is possible to build a reports-facilities management system which is pluggable by a programmer.
 
-The initial aim of the project was not to be pluggable by anyone, and it was assumed that someone with a working knowledge of Django would be able to alter the system. However, the project has evolved towards the point where it would be easy to rewrite sections of the code which would enable an administrator to, for example, make a model which was Reportable. \\
+The initial aim of the project was not to be pluggable by anyone, and it was assumed that someone with a working knowledge of Django would be able to alter the system. However, the project has evolved towards the point where it would be easy to rewrite sections of the code which would enable an administrator to, for example, make a model which was Reportable.
 
-As it stands, the system can be installed and run. All that is required is for an administrator to configure the site to the area they have jurisdiction over, input some facility data, and watch the reports come in. \\
-
-I have implemented an algorithm which calculates the best strategy for a ``reverse Dutch" auction for the government. \\
+As it stands, the system can be installed and run. All that is required is for an administrator to configure the site to the area they have jurisdiction over, input some facility data, and watch the reports come in.
 
 I was unable to find a solution for calculating the urgency of a report based on subjective, qualitative data.
 
 \section{Environmental and Ethical Impact}
-I hope that by having this system in place, it will have a positive impact on the local environment. Having been to developing countries and seen the problems caused by faulty sanitation facilities, I hope that a system like this could encourage people to pro-actively change their situation. \\
+I hope that by having this system in place, it will have a positive impact on the local environment. Having been to developing countries and seen the problems caused by faulty sanitation facilities, I hope that a system like this could encourage people to pro-actively change their situation.
 
-As hard as I tried to put in safe-guards against this from occurring, the system is still vulnerable to abuse. For example, although workers are unable to bid for jobs, they are more than capable of getting another mobile phone to bid for work. \\
+As hard as I tried to put in safe-guards against this from occurring, the system is still vulnerable to abuse.
 
-Transparency with persistent data has been strived for, but there's nothing to prevent an administrator from using the command line to delete all data; unless the person who set up the database set-up write-only permissions. \\
+Transparency with persistent data has been strived for, but there's nothing to prevent an administrator from using the command line to delete all data; unless the person who set up the database set-up write-only permissions.
 
 If the system is used correctly, I think that it could have a positive impact on local communities.
 
 \section{Lessons learnt}
-The biggest lesson I learnt from this project was that as a software engineer, learning when to automate and when not to automate makes the difference in whether or not a system will get used. I think that had I implemented an automated scheduling algorithm, there would have been little chance of a high up-take; mostly because people don't like computers controlling their lives. I really learned how computers are a tool, and like a good carpenter, one should know when and how to use them. \\
+The biggest lesson I learnt from this project was that as a software engineer, learning when to automate and when to not makes the difference in whether or not a system will get used. I think that had I implemented an automated scheduling algorithm, there would have been little chance of a high up-take; mostly because people don't like computers controlling their lives. I really learned how computers are a tool, and like a good carpenter, one should know when and how to use them.
 
-When someone was proof-reading my report a while ago, they mentioned that I had a tendency to think from the computer's perspective, rather than from the user's perspective. With that in mind, I really had to try to put myself into an administrator's head. They don't want to fill in lots of boxes or lots of forms to configure the system. \\
+I had to learn to think like an administrator, and not as a developer. I believe the system is intuitive to use for this reason.
 
-From a technical perspective, I learnt a lot about how Django works. The developers believe in the virtue of reading source code to understand how software works; and so it has been instilled into me that Google is the last resort, not the first! \\
+From a technical perspective, I learnt a lot about how Django works. The developers believe in the virtue of reading source code to understand how software works; and so it has been instilled into me that Google is the last resort, not the first!
 
-This project was mostly about design: my whiteboard was covered in class diagrams for a good few months. As soon as the design was properly formulated, the implementation was fairly straightforward. I also adhered to test-driven development for the most part, testing bits of code that didn't rely on the way Django worked. \\
+This project was mostly about design. As soon as the design was properly formulated, the implementation was straightforward. I also adhered to test-driven development for the most part, testing bits of code that didn't rely on the way Django worked.
 
-If I could do it all again, I would spend much less time on the automatic urgency of reports: it simply doesn't need to be automatic. This implementation is much simpler, and it allows an administrator full control over how reports are turned into jobs. I would spend more time developing the auctions app, and thereby be more on the way to integrating money. \\
-
-I would have given myself more than 2 weeks to understand the Optimal Dutch auction. I spent so long trying to work out what the actual algorithm they describe is. I even had email correspondence with one of the authors to try to understand. Most of my time reading the paper was spent scrolling up and time, and everything in the auctions section has been compiled from that arduous process.
+If I could do it all again, I would spend much less time on the automatic urgency of reports: it simply doesn't need to be automatic. This implementation is much simpler, and it allows an administrator full control over how reports are handled. I would spend more time developing the auctions app, and thereby be more on the way to integrating money.
 
 \section{Future Implementations}
-I plan to take this project as far forward as I can. There are many things I would like to add. Some of these have already been mentioned in the text. The priority is integrated mobile money: as soon as workers have a real incentive to sign up to the system, this product has a big chance to be a success. \\
+I plan to take this project as far forward as I can. There are many things I would like to add. Some of these have already been mentioned in the text.
 
-I would like an administrator to have the ability to dynamically add models through the interface. That way they could declare their own reportable classes without relying on a programmer. On a similar principle, they could declare auctions through the administrative interface.
+Offline reporting is necessary: even if a user is not connected to the Internet, they should still be able to make reports.
+
+Full SMS integration.
+
+I would like an administrator to have the ability to dynamically add models through the interface. That way they could declare their own reportable classes without relying on a programmer.
